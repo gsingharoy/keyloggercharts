@@ -34,6 +34,9 @@ function getDataFromMongoLab(view){
 	  else if(view == "avgtimekeystrokes"){
 	  	averageTimeTakenForKeystrokes();
 	  }
+	  else if(view == "avgkeystrokesbackspace"){
+	  	displayAvgkeystrokesbackspaceCharts();
+	  }
 	});
 }
 
@@ -258,6 +261,62 @@ function averageTimeTakenForKeystrokes(){
 
 }
 
+
+function displayAvgkeystrokesbackspaceCharts(){
+	if(isDataEmpty())
+		getDataFromMongoLab('avgkeystrokesbackspace');
+	else{
+	$("#img_wait").hide();	
+	var arr_avg_key = new Array();
+
+	$(".hdn-data-container").each(function(index){
+	  	var str_date = $(this).attr("timestamp").substring(0,19);
+	  	var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+		var dateArray = reggie.exec(str_date); 
+		var dateObject = new Date(
+		    (+dateArray[1]),
+		    (+dateArray[2])-1, 
+		    (+dateArray[3]),
+		    (+dateArray[4]),
+		    (+dateArray[5]),
+		    (+dateArray[6])
+			);
+		if(parseInt($(this).attr("backspaces")) > 0){
+			var avg_key = parseFloat($(this).attr("total_keystrokes"))/parseFloat($(this).attr("backspaces"));
+			arr_avg_key.push([dateObject.getTime(),avg_key]);
+		}	
+		
+		
+	});
+  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
+  	$(function() {
+
+
+				$('#charts_container_avgkeystrokesbackspace').highcharts('StockChart', {
+					
+
+
+
+					title : {
+						text : 'Average Keystrokes per backspace'
+					},
+					legend: {
+						enabled : true
+					},
+					series : [{
+						name : 'Keystrokes per backspace',
+						data : arr_avg_key,
+						color: 'orange',
+						tooltip: {
+							valueDecimals: 2
+						}
+					},
+					]
+				});
+			});
+  	}
+}
+
 App = Ember.Application.create({
   ready: function() {
     console.log('App ready');
@@ -268,7 +327,8 @@ App = Ember.Application.create({
 
 App.Router.map(function() {
   	this.resource('avgbackspaces');
-  	this.resource('avgtimekeystrokes')
+  	this.resource('avgtimekeystrokes');
+  	this.resource('avgkeystrokesbackspace');
 });
 
 
@@ -298,6 +358,16 @@ App.AvgtimekeystrokesView = Ember.View.extend({
     $("#li_avgtimekeystrokes").addClass('active');
   }
 });
+
+App.AvgkeystrokesbackspaceView = Ember.View.extend({
+  didInsertElement: function() {
+  	displayAvgkeystrokesbackspaceCharts();
+    $(".nav-menu").removeClass('active');
+    $("#li_avgkeystrokesbackspace").addClass('active');
+  }
+});
+
+
 
 
 

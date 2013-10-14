@@ -19,15 +19,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Home</a>
+
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex8-collapse">
           <ul class="nav navbar-nav">
             <li id="li_index" class="nav-menu">{{#link-to 'index'}}All Keystrokes{{/link-to}}</li>
-            <li id="li_avgbackspaces" class="nav-menu">{{#link-to 'avgbackspaces'}}Average backspaces{{/link-to}}</li>
+            <li id="li_avgbackspaces" class="nav-menu">{{#link-to 'avgbackspaces'}}Backspaces/Keystrokes{{/link-to}}</li>
+            <li id="li_avgkeystrokesbackspace" class="nav-menu">{{#link-to 'avgkeystrokesbackspace'}}Keystrokes/Backspaces{{/link-to}}</li>
             <li id="li_avgtimekeystrokes" class="nav-menu">{{#link-to 'avgtimekeystrokes'}}Time taken for keystrokes{{/link-to}}</li>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -51,6 +53,11 @@
   <script type="text/x-handlebars" id="avgtimekeystrokes">
     <center><img src="images/wait.gif" id="img_wait" class='img-wait'></center>
     <div id="charts_container_avgtimekeystrokes" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+  </script>
+
+  <script type="text/x-handlebars" id="avgkeystrokesbackspace">
+    <center><img src="images/wait.gif" id="img_wait" class='img-wait'></center>
+    <div id="charts_container_avgkeystrokesbackspace" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
   </script>
 
   <script src="js/libs/jquery-1.9.1.js"></script>
