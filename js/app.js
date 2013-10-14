@@ -4,10 +4,12 @@ App.Router.map(function() {
   this.resource('avgbackspaces');
 });
 
-var keystrokes = new Array();
-var backspaces = new Array();
-
-if($("#data_container").length <= 0){
+App.IndexRoute = Ember.Route.extend({
+  setupController: function(controller) {
+    // Set the IndexController's `title`
+    var keystrokes = new Array();
+	var backspaces = new Array();
+    if($("#data_container").length <= 0){
 	$.getJSON( "https://api.mongolab.com/api/1/databases/qslab/collections/words?apiKey=fqhK5jNPNPCnv4aIBADT3l5Y0P2DMWJr&l=2000", function( data ) {
 	  $("#img_wait_index").hide();
 	  $("#data").append("<div id='data_container'></div>")
@@ -77,5 +79,11 @@ if($("#data_container").length <= 0){
 
 	});
 }
+  }
+});
+
+
+
+
 
 
