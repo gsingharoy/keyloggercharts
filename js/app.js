@@ -21,9 +21,20 @@ if($("#data_container").length <= 0){
 	  });
 
 	  $(".hdn-data-container").each(function(index){
-	  	var date = new Date.parse($(this).attr("timestamp").substring(0,10));
+	  	var str_date = $(this).attr("timestamp").substring(0,19);
+	  	var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+		var dateArray = reggie.exec(str_date); 
+		var dateObject = new Date(
+		    (+dateArray[1]),
+		    (+dateArray[2])-1, 
+		    (+dateArray[3]),
+		    (+dateArray[4]),
+		    (+dateArray[5]),
+		    (+dateArray[6])
+		);
+	  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
 	  	var total_keystrokes = parseInt($(this).attr("total_keystrokes"));
-	  	total_data.push([date.getTime(),total_keystrokes]);
+	  	total_data.push([dateObject.getTime(),total_keystrokes]);
 	  });
     
 		$(function() {
