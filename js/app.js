@@ -4,7 +4,7 @@ App.Router.map(function() {
   // put your routes here
 });
 
-var total_data = new Array();
+var total_keystrokes = new Array();
 
 if($("#data_container").length <= 0){
 	$.getJSON( "https://api.mongolab.com/api/1/databases/qslab/collections/words?apiKey=fqhK5jNPNPCnv4aIBADT3l5Y0P2DMWJr&l=2000", function( data ) {
@@ -33,8 +33,8 @@ if($("#data_container").length <= 0){
 		    (+dateArray[6])
 		);
 	  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
-	  	var total_keystrokes = parseInt($(this).attr("total_keystrokes"));
-	  	total_data.push([dateObject.getTime(),total_keystrokes]);
+	  	
+	  	total_keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
 	  });
     
 		$(function() {
@@ -51,7 +51,7 @@ if($("#data_container").length <= 0){
 					
 					series : [{
 						name : 'Total Keystrokes',
-						data : total_data,
+						data : total_keystrokes,
 						tooltip: {
 							valueDecimals: 0
 						}
