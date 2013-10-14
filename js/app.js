@@ -1,7 +1,6 @@
 
 
 
-
 function isDataEmpty(){
 	if($("#data_container").length <= 0){
 		return true;
@@ -112,9 +111,17 @@ App.Router.map(function() {
 
 App.IndexView = Ember.View.extend({
   didInsertElement: function() {
-    // Set the IndexController's `title`
     displayIndexCharts();
-    //alert($("#charts_container_index").length);
+    $(".nav-menu").removeClass('active');
+    $("#li_index").addClass('active');
+  }
+});
+
+App.AvgbackspacesView = Ember.View.extend({
+  didInsertElement: function() {
+
+    $(".nav-menu").removeClass('active');
+    $("#li_avgbackspaces").addClass('active');
   }
 });
 
