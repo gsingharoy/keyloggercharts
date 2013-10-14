@@ -19,18 +19,19 @@ if($("#data_container").length <= 0){
 	   	$("#data_container").append(html);
 	  });
 
-	});
-}
 
- if($("#charts_container_index").length >= 0){
-      $(function () {
+	$(function () {
+		var categories = {};
+		$(".hdn-data-container").each(function(index){
+
+		});
         $('#charts_container_index').highcharts({
             title: {
-                text: 'Monthly Average Temperature',
+                text: 'Total Keystrokes per day',
                 x: -20 //center
             },
             subtitle: {
-                text: 'Source: WorldClimate.com',
+                text: 'July',
                 x: -20
             },
             xAxis: {
@@ -71,6 +72,15 @@ if($("#data_container").length <= 0){
             }]
         });
     });
-}
+
     
 
+
+
+
+
+
+	});
+}
+
+      
