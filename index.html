@@ -28,7 +28,7 @@
           <ul class="nav navbar-nav">
             <li id="li_index" class="nav-menu">{{#link-to 'index'}}All Keystrokes{{/link-to}}</li>
             <li id="li_avgbackspaces" class="nav-menu">{{#link-to 'avgbackspaces'}}Average backspaces{{/link-to}}</li>
-            <li class="nav-menu"><a href="#">Average time taken for keystrokes</a></li>
+            <li id="li_avgtimekeystrokes" class="nav-menu">{{#link-to 'avgtimekeystrokes'}}Average time taken for keystrokes{{/link-to}}</li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </nav>
@@ -46,6 +46,11 @@
   <script type="text/x-handlebars" id="avgbackspaces">
     <center><img src="images/wait.gif" id="img_wait" class='img-wait'></center>
     <div id="charts_container_avgbackspaces" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
+  </script>
+
+  <script type="text/x-handlebars" id="avgtimekeystrokes">
+    <center><img src="images/wait.gif" id="img_wait" class='img-wait'></center>
+    <div id="charts_container_avgtimekeystrokes" style="min-width: 200px; height: 400px; margin: 0 auto"></div>
   </script>
 
   <script src="js/libs/jquery-1.9.1.js"></script>
