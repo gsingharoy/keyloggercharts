@@ -4,7 +4,8 @@ App.Router.map(function() {
   // put your routes here
 });
 
-var total_keystrokes = new Array();
+var keystrokes = new Array();
+var backspaces = new Array();
 
 if($("#data_container").length <= 0){
 	$.getJSON( "https://api.mongolab.com/api/1/databases/qslab/collections/words?apiKey=fqhK5jNPNPCnv4aIBADT3l5Y0P2DMWJr&l=2000", function( data ) {
@@ -34,7 +35,8 @@ if($("#data_container").length <= 0){
 		);
 	  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
 	  	
-	  	total_keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
+	  	keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
+	  	backspaces.push([dateObject.getTime(),parseInt($(this).attr("backspaces"))]);
 	  });
     
 		$(function() {
@@ -46,16 +48,18 @@ if($("#data_container").length <= 0){
 
 
 					title : {
-						text : 'Total Keystrokes'
+						text : 'Keystrokes Timeline'
 					},
 					
 					series : [{
 						name : 'Total Keystrokes',
-						data : total_keystrokes,
+						data : keystrokes,
 						tooltip: {
 							valueDecimals: 0
 						}
-					}]
+					}
+
+					]
 				});
 			});
 
