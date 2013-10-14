@@ -72,6 +72,9 @@ function displayIndexCharts(){
 					title : {
 						text : 'All Keystrokes Timeline'
 					},
+					legend: {
+						enabled : true
+					},
 					
 					series : [{
 						name : 'Total Keystrokes',
@@ -132,7 +135,9 @@ if(isDataEmpty())
 					title : {
 						text : 'Average backspaces per keystroke'
 					},
-					
+					legend: {
+						enabled : true
+					},
 					series : [{
 						name : 'Average Backspaces per keystroke',
 						data : backspaces_avg,
@@ -185,10 +190,13 @@ function averageTimeTakenForKeystrokes(){
 					title : {
 						text : 'Average time taken for keystrokes'
 					},
-					
+					legend: {
+						enabled : true
+					},
 					series : [{
 						name : 'Keystrokes per second',
 						data : arr_avg_time,
+						color: 'red',
 						tooltip: {
 							valueDecimals: 2
 						}
