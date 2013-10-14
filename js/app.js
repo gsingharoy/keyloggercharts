@@ -44,6 +44,12 @@ function displayIndexCharts(){
 	$("#img_wait").hide();	
 	var keystrokes = new Array();
 	var backspaces = new Array();
+	var alphabetical_characters = new Array();
+	var numeric_characters = new Array();
+	var word_separators = new Array();
+	var special_characters = new Array();
+	var uppercase = new Array();
+
 	$(".hdn-data-container").each(function(index){
 	  	var str_date = $(this).attr("timestamp").substring(0,19);
 	  	var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
@@ -58,6 +64,11 @@ function displayIndexCharts(){
 			);
 		keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
 		backspaces.push([dateObject.getTime(),parseInt($(this).attr("backspaces"))]);
+		alphabetical_characters.push([dateObject.getTime(),parseInt($(this).attr("alphabetical_characters"))]);
+		numeric_characters.push([dateObject.getTime(),parseInt($(this).attr("numeric_characters"))]);
+		word_separators.push([dateObject.getTime(),parseInt($(this).attr("word_separators"))]);
+		special_characters.push([dateObject.getTime(),parseInt($(this).attr("special_characters"))]);
+		uppercase.push([dateObject.getTime(),parseInt($(this).attr("uppercase"))]);
 	});
   	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
 
@@ -70,7 +81,7 @@ function displayIndexCharts(){
 
 
 					title : {
-						text : 'All Keystrokes Timeline'
+						text : 'All Keystrokes'
 					},
 					legend: {
 						enabled : true
@@ -86,6 +97,44 @@ function displayIndexCharts(){
 					{
 						name : 'Backspaces',
 						data : backspaces,
+						tooltip: {
+							valueDecimals: 0
+						}
+					}
+					,
+					{
+						name : 'Alphabetical Characters',
+						data : alphabetical_characters,
+						tooltip: {
+							valueDecimals: 0
+						}
+					}
+					,
+					{
+						name : 'Numeric Characters',
+						data : numeric_characters,
+						tooltip: {
+							valueDecimals: 0
+						}
+					}
+					,
+					{
+						name : 'Word Separators',
+						data : word_separators,
+						tooltip: {
+							valueDecimals: 0
+						}
+					},
+					{
+						name : 'Special Characters',
+						data : special_characters,
+						tooltip: {
+							valueDecimals: 0
+						}
+					},
+					{
+						name : 'Uppercase Characters',
+						data : uppercase,
 						tooltip: {
 							valueDecimals: 0
 						}
@@ -196,7 +245,7 @@ function averageTimeTakenForKeystrokes(){
 					series : [{
 						name : 'Keystrokes per second',
 						data : arr_avg_time,
-						color: 'red',
+						color: 'green',
 						tooltip: {
 							valueDecimals: 2
 						}
