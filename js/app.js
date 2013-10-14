@@ -1,15 +1,19 @@
-App = Ember.Application.create();
 
-App.Router.map(function() {
-  this.resource('avgbackspaces');
-});
 
-App.IndexRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    // Set the IndexController's `title`
-    var keystrokes = new Array();
-	var backspaces = new Array();
-    if($("#data_container").length <= 0){
+
+
+function isDataEmpty(){
+	if($("#data_container").length <= 0){
+		return true;
+	}
+	else{
+		return false;
+	}
+
+}
+
+function getDataFromMongoLab(view){
+	$("#img_wait_index").show();
 	$.getJSON( "https://api.mongolab.com/api/1/databases/qslab/collections/words?apiKey=fqhK5jNPNPCnv4aIBADT3l5Y0P2DMWJr&l=2000", function( data ) {
 	  $("#img_wait_index").hide();
 	  $("#data").append("<div id='data_container'></div>")
@@ -22,8 +26,20 @@ App.IndexRoute = Ember.Route.extend({
 	   	html += ">" ;
 	   	$("#data_container").append(html);
 	  });
+	  if(view == "index"){
+	  	displayIndexCharts();
+	  }
+	});
+}
 
-	  $(".hdn-data-container").each(function(index){
+function displayIndexCharts(){
+	if(isDataEmpty())
+		getDataFromMongoLab('index');
+	else{
+	var keystrokes = new Array();
+	var backspaces = new Array();
+
+	$(".hdn-data-container").each(function(index){
 	  	var str_date = $(this).attr("timestamp").substring(0,19);
 	  	var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
 		var dateArray = reggie.exec(str_date); 
@@ -34,14 +50,13 @@ App.IndexRoute = Ember.Route.extend({
 		    (+dateArray[4]),
 		    (+dateArray[5]),
 		    (+dateArray[6])
-		);
-	  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
-	  	
-	  	keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
-	  	backspaces.push([dateObject.getTime(),parseInt($(this).attr("backspaces"))]);
-	  });
-    
-		$(function() {
+			);
+		keystrokes.push([dateObject.getTime(),parseInt($(this).attr("total_keystrokes"))]);
+		backspaces.push([dateObject.getTime(),parseInt($(this).attr("backspaces"))]);
+	});
+  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
+  	alert(keystrokes[21]);
+  	$(function() {
 
 
 				$('#charts_container_index').highcharts('StockChart', {
@@ -70,17 +85,40 @@ App.IndexRoute = Ember.Route.extend({
 					]
 				});
 			});
+  	}
 
 
 
 
-
-
-
-	});
 }
+
+
+App = Ember.Application.create({
+  ready: function() {
+    console.log('App ready');
   }
 });
+
+
+
+App.Router.map(function() {
+  	this.resource('avgbackspaces');
+});
+
+
+
+
+
+App.IndexView = Ember.View.extend({
+  didInsertElement: function() {
+    // Set the IndexController's `title`
+    displayIndexCharts();
+    //alert($("#charts_container_index").length);
+  }
+});
+
+
+
 
 
 
