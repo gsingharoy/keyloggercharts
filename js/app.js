@@ -36,6 +36,7 @@ function displayIndexCharts(){
 	if(isDataEmpty())
 		getDataFromMongoLab('index');
 	else{
+	$("#img_wait_index").hide();	
 	var keystrokes = new Array();
 	var backspaces = new Array();
 
