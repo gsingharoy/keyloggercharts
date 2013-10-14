@@ -153,7 +153,7 @@ function averageTimeTakenForKeystrokes(){
 		getDataFromMongoLab('avgtimekeystrokes');
 	else{
 	$("#img_wait").hide();	
-	var backspaces_avg = new Array();
+	var arr_avg_time = new Array();
 
 	$(".hdn-data-container").each(function(index){
 	  	var str_date = $(this).attr("timestamp").substring(0,19);
@@ -167,8 +167,11 @@ function averageTimeTakenForKeystrokes(){
 		    (+dateArray[5]),
 		    (+dateArray[6])
 			);
-		var avg_backspace = parseFloat($(this).attr("backspaces"))/parseFloat($(this).attr("total_keystrokes"));
-		backspaces_avg.push([dateObject.getTime(),avg_backspace]);
+		if(parseInt($(this).attr("time_taken")) == 0)
+			var avg_time = parseFloat($(this).attr("total_keystrokes"));
+		else	
+			var avg_time = parseFloat($(this).attr("total_keystrokes"))/parseFloat($(this).attr("time_taken"));
+		arr_avg_time.push([dateObject.getTime(),avg_time]);
 	});
   	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
   	$(function() {
@@ -180,14 +183,14 @@ function averageTimeTakenForKeystrokes(){
 
 
 					title : {
-						text : 'Average backspaces per keystroke'
+						text : 'Average time taken for keystrokes'
 					},
 					
 					series : [{
-						name : 'Average Backspaces per keystroke',
-						data : backspaces_avg,
+						name : 'Average Keystrokes per second',
+						data : arr_avg_time,
 						tooltip: {
-							valueDecimals: 3
+							valueDecimals: 2
 						}
 					},
 					]
