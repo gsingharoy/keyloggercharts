@@ -187,7 +187,7 @@ function averageTimeTakenForKeystrokes(){
 					},
 					
 					series : [{
-						name : 'Average Keystrokes per second',
+						name : 'Keystrokes per second',
 						data : arr_avg_time,
 						tooltip: {
 							valueDecimals: 2
