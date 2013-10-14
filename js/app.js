@@ -28,6 +28,9 @@ function getDataFromMongoLab(view){
 	  if(view == "index"){
 	  	displayIndexCharts();
 	  }
+	  else if(view == "avgbackspaces"){
+	  	displayAverageBackspaceCharts();
+	  }
 	});
 }
 
@@ -55,7 +58,7 @@ function displayIndexCharts(){
 		backspaces.push([dateObject.getTime(),parseInt($(this).attr("backspaces"))]);
 	});
   	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
-  	alert(keystrokes[21]);
+
   	$(function() {
 
 
@@ -65,7 +68,7 @@ function displayIndexCharts(){
 
 
 					title : {
-						text : 'Keystrokes Timeline'
+						text : 'All Keystrokes Timeline'
 					},
 					
 					series : [{
@@ -93,6 +96,56 @@ function displayIndexCharts(){
 }
 
 
+function displayAverageBackspaceCharts(){
+if(isDataEmpty())
+		getDataFromMongoLab('avgbackspaces');
+	else{
+	$("#img_wait").hide();	
+	var backspaces_avg = new Array();
+
+	$(".hdn-data-container").each(function(index){
+	  	var str_date = $(this).attr("timestamp").substring(0,19);
+	  	var reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
+		var dateArray = reggie.exec(str_date); 
+		var dateObject = new Date(
+		    (+dateArray[1]),
+		    (+dateArray[2])-1, 
+		    (+dateArray[3]),
+		    (+dateArray[4]),
+		    (+dateArray[5]),
+		    (+dateArray[6])
+			);
+		var avg_backspace = parseFloat($(this).attr("backspaces"))/parseFloat($(this).attr("total_keystrokes"));
+		backspaces_avg.push([dateObject.getTime(),avg_backspace]);
+	});
+  	//var date = new Date.parse($(this).attr("timestamp").substring(0,10));
+  	$(function() {
+
+
+				$('#charts_container_avgbackspaces').highcharts('StockChart', {
+					
+
+
+
+					title : {
+						text : 'Average backspaces per keystroke'
+					},
+					
+					series : [{
+						name : 'Average Backspaces per keystroke',
+						data : backspaces_avg,
+						tooltip: {
+							valueDecimals: 3
+						}
+					},
+					]
+				});
+			});
+  	}
+
+
+}
+
 App = Ember.Application.create({
   ready: function() {
     console.log('App ready');
@@ -119,7 +172,7 @@ App.IndexView = Ember.View.extend({
 
 App.AvgbackspacesView = Ember.View.extend({
   didInsertElement: function() {
-
+  	displayAverageBackspaceCharts();
     $(".nav-menu").removeClass('active');
     $("#li_avgbackspaces").addClass('active');
   }
