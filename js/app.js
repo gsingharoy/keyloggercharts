@@ -12,9 +12,9 @@ function isDataEmpty(){
 }
 
 function getDataFromMongoLab(view){
-	$("#img_wait_index").show();
+	$("#img_wait").show();
 	$.getJSON( "https://api.mongolab.com/api/1/databases/qslab/collections/words?apiKey=fqhK5jNPNPCnv4aIBADT3l5Y0P2DMWJr&l=2000", function( data ) {
-	  $("#img_wait_index").hide();
+	  $("#img_wait").hide();
 	  $("#data").append("<div id='data_container'></div>")
 	  $.each( data, function( key, val ) {
 	  	var html = "";
@@ -35,7 +35,7 @@ function displayIndexCharts(){
 	if(isDataEmpty())
 		getDataFromMongoLab('index');
 	else{
-	$("#img_wait_index").hide();	
+	$("#img_wait").hide();	
 	var keystrokes = new Array();
 	var backspaces = new Array();
 
