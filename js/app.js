@@ -57,8 +57,14 @@ if($("#data_container").length <= 0){
 						tooltip: {
 							valueDecimals: 0
 						}
+					},
+					{
+						name : 'Backspaces',
+						data : backspaces,
+						tooltip: {
+							valueDecimals: 0
+						}
 					}
-
 					]
 				});
 			});
